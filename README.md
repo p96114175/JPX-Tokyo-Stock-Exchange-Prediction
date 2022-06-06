@@ -4,6 +4,8 @@
 
 對確定日期和股票代碼進行Rank預測，Rank表示2000隻股票中每隻股票的第二天收盤價和第二天收盤價的變化率的排名
 
+# Kaggle team
+
 # 資料前處理
 
 應用 upper_shadow、lower_shadow 完成特徵提取
