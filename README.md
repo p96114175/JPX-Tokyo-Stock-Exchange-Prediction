@@ -12,13 +12,38 @@
 
 ![image](https://user-images.githubusercontent.com/48245648/172189839-c3c32802-e3b2-4a3b-82ce-2e7cc0382d42.png)
 
-# Feature Engineering
+## Feature Engineering
 透過對原始資料的分析與加工，使得AI Model可以處理更為有意義的資料，並且提升Ｍodel的準確性，以下針對我們有使用的Feature介紹
 * Upper & Lower shadow:有些技術分析方法，是藉由這些K線的型態、排列方式，來了解現在市場情緒。
 ![image](https://user-images.githubusercontent.com/102530486/172061802-61da38a6-c1f1-4b04-8d28-cc67d6947641.png)
 * Return:計算與過去股價差距之百分比，如果為正，則為上漲趨勢，反之為負，則下跌趨勢。
 * MovingAvg:MA線是一條平滑的曲線，所以可以利用斜率來判斷目前股價的發展趨勢。
 * Volatility:波動率高的特點是價格變化節奏極快，交易量較大，市場出現意外重大價格變動。另一方面，波動率較低往往趨於穩定，並且價格波動較小。
+
+<img width="968" alt="image" src="https://user-images.githubusercontent.com/48245648/172362140-daf901de-9ed6-4728-a075-2321fdc265dd.png">
+透過LightGBM所提供的特徵重要性排名，去篩選適合的特徵去訓練模型
+
+## 超參數設定
+在實驗過程中，除了Feature的資料可以設計，還有Model的參數可以調整，Optuna 是一個專為機器學習設計的自動超參數優化的框架，透過Optuna調整的超參數來提高模型預測能力。
+
+```python=
+def objectives(trial):
+    params = {
+            'num_leaves': trial.suggest_int('num_leaves', 300, 4000),
+            'n_estimators': trial.suggest_int('n_estimators', 10, 1000),
+            'max_bin': trial.suggest_int('max_bin', 2, 100),
+            'learning_rate': trial.suggest_uniform('learning_rate',0, 1),
+    }
+    model = LGBMRegressor(**params, device_type = 'gpu')
+    model.fit(X_optuna, y)
+    score = model.score(X_optuna, y)
+    return score
+```
+
+## Cross-Validation
+為了避免Model過於overfitting，我們設計10-fold Cross-Validation來分割訓練集，每份資料介於2017年至2021年間的任兩個時段。
+> 以下為Fold 10的分割 與 驗證完的平均Sharpe ratio
+![image](https://user-images.githubusercontent.com/48245648/172364938-a0436e91-d7ef-4bfa-a674-9b4e2b19f42a.png)
 
 
 # 使用資料說明
