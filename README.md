@@ -20,6 +20,24 @@
 * MovingAvg:MA線是一條平滑的曲線，所以可以利用斜率來判斷目前股價的發展趨勢。
 * Volatility:波動率高的特點是價格變化節奏極快，交易量較大，市場出現意外重大價格變動。另一方面，波動率較低往往趨於穩定，並且價格波動較小。
 
+```python=
+feat_importance['avg'] = feat_importance.mean(axis=1)
+feat_importance = feat_importance.sort_values(by='avg',ascending=True)
+pal=sns.color_palette("plasma_r", 29).as_hex()[2:]
+
+fig=go.Figure()
+for i in range(len(feat_importance.index)):
+    fig.add_shape(dict(type="line", y0=i, y1=i, x0=0, x1=feat_importance['avg'][i], 
+                       line_color=pal[::-1][i],opacity=0.7,line_width=4))
+fig.add_trace(go.Scatter(x=feat_importance['avg'], y=feat_importance.index, mode='markers', 
+                         marker_color=pal[::-1], marker_size=8,
+                         hovertemplate='%{y} Importance = %{x:.0f}<extra></extra>'))
+fig.update_layout(template=temp,title='Overall Feature Importance', 
+                  xaxis=dict(title='Average Importance',zeroline=False),
+                  yaxis_showgrid=False, margin=dict(l=120,t=80),
+                  height=700, width=800)
+fig.show()
+```
 <img width="968" alt="image" src="https://user-images.githubusercontent.com/48245648/172362140-daf901de-9ed6-4728-a075-2321fdc265dd.png">
 透過LightGBM所提供的特徵重要性排名，去篩選適合的特徵去訓練模型
 
