@@ -1,5 +1,7 @@
 # JPX-Tokyo-Stock-Exchange-Prediction
 
+https://www.kaggle.com/competitions/jpx-tokyo-stock-exchange-prediction/code
+
 # 目標
 
 對特定日期進行2000支股票Rank預測，並根據每日點差回報的夏普比率進行評估
