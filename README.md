@@ -15,8 +15,8 @@ https://www.kaggle.com/competitions/jpx-tokyo-stock-exchange-prediction/code
 ![image](https://user-images.githubusercontent.com/48245648/172189839-c3c32802-e3b2-4a3b-82ce-2e7cc0382d42.png)
 
 ## Feature Engineering
-透過對原始資料的分析與加工，使得AI Model可以處理更為有意義的資料，並且提升Ｍodel的準確性，以下針對我們有使用的Feature介紹
-* Upper & Lower shadow:有些技術分析方法，是藉由這些K線的型態、排列方式，來了解現在市場情緒。
+透過對原始資料的分析與處理，使得AI Model可以訓練為更有意義的資料，並且提升Ｍodel的準確性，以下針對我們有使用的Feature介紹
+* Upper & Lower shadow:藉由K線的型態、排列方式，了解目前市場情緒，並可作為預測未來是多頭還是空頭的一種指標。K線是由開盤價、最高價、最低價、收盤價所構成，也是記錄買方和賣方實戰的過程；如果收盤價高於開盤價就以「實體紅線」表示，收盤價低於開盤價則以「實體黑線」表示，最高價及最低價則以「影線」表示，高價拉回則留上影線，低價回升則留下影線。
 ![image](https://user-images.githubusercontent.com/102530486/172061802-61da38a6-c1f1-4b04-8d28-cc67d6947641.png)
 * Return:計算與過去股價差距之百分比，如果為正，則為上漲趨勢，反之為負，則下跌趨勢。
 * MovingAvg:MA線是一條平滑的曲線，所以可以利用斜率來判斷目前股價的發展趨勢。
